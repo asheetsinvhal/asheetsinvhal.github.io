@@ -167,7 +167,7 @@ function showPort() {
 function hidePort() {
     document.getElementById('portfolio-popup').style.display = 'none';
 }
-
+/* // Old code for reference
 function refreshTeamData() {
     //write to sheets api
     var xhttp = new XMLHttpRequest();
@@ -179,9 +179,8 @@ function refreshTeamData() {
     xhttp.open("GET", "/teamdata", true);
     xhttp.send();
 }
-
-function updateMarketPrice() {
-    //Google sheets api 
+*/
+function updateMarketPrice() { 
   shares = [];
     var params = {
         //The ID of the spreadsheet to retrieve data from.
@@ -221,7 +220,12 @@ function updateMarketPrice() {
     }, function(reason) {
         console.error('error: ' + reason.result.error.message);
     });
-} /* var $form=$('form#test-form'), url='https://script.google.com/a/imi.edu/macros/s/AKfycbyAeh_5252xghfdNs1Je9MlLQ9OmiuKz-TUxO7fmzkjCAqJdha_/exec' //App script url$('#submit-form').on('click', function(e){e.preventDefault(); var jqxhr=$.ajax({url: url, method: "GET", dataType: "json", data: $form.serializeObject()}).success( // do something );})*/
+}
+/* var $form=$('form#test-form'), 
+url='https://script.google.com/a/imi.edu/macros/s/AKfycbyAeh_5252xghfdNs1Je9MlLQ9OmiuKz-TUxO7fmzkjCAqJdha_/exec' 
+//App script url$('#submit-form').on('click', function(e){e.preventDefault(); 
+var jqxhr=$.ajax({url: url, method: "GET", dataType: "json", data: $form.serializeObject()}).success( // do something );
+})*/
 stock_action = async function(buttonId) {
     var teamId = document.getElementById('team_id').value;
     var country = document.getElementById('country_name').value;
