@@ -1,0 +1,41 @@
+
+<html>
+	<head>
+		<title>GF|Team Scores</title>
+		<link rel="icon" type="image/ico" href="../img/FinClubIMI.png" />
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:900|Open+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="../css/teamscores.css">
+		<script type="text/javascript" src="../js/teamscores.js"></script>
+		<script async defer src="https://apis.google.com/js/api.js"
+					onload="this.onload=function(){};handleClientLoad()"
+					onreadystatechange="if (this.readyState === 'complete') this.onload()">
+		</script>
+
+</head>
+<body  onload="handleSignInClick()">
+		<p class="big-title">TEAM SCORES</p>
+				 <div id='country-select-holder' style="display: inline-block;">
+						<label style="margin-left:20px;">ROUND :
+							 <select id="round" name="country_name1" onchange="loadTeamData();">
+										<option value=-1>-</option>
+										<option>1</option>   
+										<option>2</option>
+										<option>3</option>
+								    <option>4</option>
+								</select>
+						</label>
+				</div>
+				 <table class="container1" id="scoreTable">
+						<thead>
+								<tr>
+									<th><h1>Team Number</h1></th>
+									<th><h1>Team Name</h1></th>
+									<th><h1>Cash Balance</h1></th>
+									<th><h1>Score</h1></th>
+								</tr>
+						</thead>
+						<tbody>
+						</tbody>
+				</table>
+	</body>
+</html>

@@ -1,0 +1,63 @@
+body {
+  background: rgba(3, 71, 119, 0.93); <!--for lblue rgba(35, 128, 208, 0.93);-->
+  color: white;
+  font-family: 'Montserrat';
+  font-weight: 900;
+ }
+ .big-title {
+  font-family: 'Montserrat';
+  font-size: 35px;
+  color: white;
+  padding: 20px;
+ }
+#overlap-1 {
+ display: block;
+ width: 100%;
+ height: 100%;
+ position: fixed;
+ top: 0px;
+ left: 0px;
+}
+
+.country-button {
+ width: 100%;
+ padding: 6px;
+ font-family:'Montserrat';
+ font-size: 24px;
+ margin-bottom: 10px;
+ background: inherit;
+ color: white;
+ border: none;
+}
+select {
+ font-family: inherit;
+ font-weight: 40;
+ background: #333333;
+ border: none;
+ border-bottom: 1px solid white;
+ color: white;
+ font-size: 14px;
+ outline: none;
+ margin-bottom: 8px;
+}
+
+
+.mb-row {
+ display: table-row;
+}
+.mb-col1,.mb-col2,.mb-col3 {
+ display: table-cell;
+ font-family: 'Montserrat';
+ font-weight: 900;
+ font-size: 26px;
+ padding: 10px;
+}
+.mb-col1 {
+ width: 400px;
+}
+.mb-col2 {
+ width: 150px;
+}
+.mb-col3 {
+ width: 150px;
+}

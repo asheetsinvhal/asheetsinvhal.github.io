@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>GlFen|Trader's Portal</title>
+ <link rel="icon" type="image/ico" href="../img/FinClubIMI.png" />
+ <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900|Open+Sans" rel="stylesheet">
+ <link rel="stylesheet" href="../css/traderportal.css">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<!--Trader 1 -->
+ <script type="text/javascript" src="../js/traderportal1.js"></script>
+	
+ <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+ </script>
+</head>
+<body onload="handleSignInClick()">
+	<p class="big-title">TRADER'S PORTAL</p>
+	<div id='country-select-holder' style="display: inline-block;">
+			<label style="margin-left:25px;">ROUND:
+				 <select id="round" name="round" onchange="setSheets();">
+							<option value=-1>-</option>
+							<option style="font-size:20px;">1</option>   
+							<option style="font-size:20px;">2</option>
+							<option style="font-size:20px;">3</option>
+							<option style="font-size:20px;">4</option>
+					</select>
+			</label>
+	</div>
+	<div id="container">
+		<p class="less-margin">TEAM ID</p>
+		<div>
+			<select id="team_id" onchange="putTeamData();">
+				<option value=-1>-</option>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+				<option>7</option>
+				<option>8</option>
+				<option>9</option>
+				<option>10</option>
+				<option>11</option>
+				<option>12</option>
+			</select>
+		</div>
+		<p class="less-margin">COUNTRY NAME</p>
+		<div>
+			<select id='country_name' onclick="putCountryData();">
+				<option value=-1>-</option>
+				<option>INDIA</option> 
+				<option>GERMANY</option>
+				<option>UK</option>
+				<option>AUSTRALIA</option>
+				<option>FRANCE</option>
+				<option>USA</option>
+				<option>CHINA</option>
+			</select>
+		</div>
+		<p class="less-margin">STOCK</p>
+		<div>
+			<select id="main" onclick="updateMarketPrice();">
+			</select>
+		</div>
+		<p class="less-margin">QUANTITY</p>
+		<div><input type="text" id="quantity"></div>
+		<p class="less-margin">PRICE</p>
+		<div><input type="number" pattern='[0-9]{10}' id="price"></div>
+		<div style="display: table;">
+			<div style="display: table-row">
+			&nbsp;&nbsp;
+			<button style="display: table-cell;width: 40%;" id="BUY" onClick="stock_action(this.id)">BUY</button>
+			&nbsp; 
+			<button style="display: table-cell;width: 40%;" id="SELL" onClick="stock_action(this.id)">SELL</button>
+			</div>
+		</div>
+	</div>
+	<div id="portfolio-popup">
+		<div>TEAM NAME:<span id='team_name'></span></div>
+		<div>CASH BALANCE:<span id='team_balance'></span></div>
+		<p id="main_p"></p>
+	</div>
+	<div id="notif">
+		Hello World!!!
+	</div>
+</body>
+</html>

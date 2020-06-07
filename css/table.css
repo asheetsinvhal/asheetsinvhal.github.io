@@ -1,0 +1,93 @@
+/*	
+	Side Navigation Menu V2, RWD
+	===================
+	License:
+	https://goo.gl/EaUPrt
+	===================
+	Author: @PableraShow
+
+ */
+
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.42em;
+  color:#A7A1AE;
+  background-color:#102030;
+}
+
+h1 {
+  font-size:2em; 
+  font-weight: 1000;
+  line-height:1em;
+  text-align: center;
+  color: #f000ff;
+}
+
+h2 {
+  font-size:1em; 
+  font-weight: 300;
+  text-align: center;
+  display: block;
+  line-height:1em;
+  padding-bottom: 2em;
+  color: #FB667A;
+}
+
+h2 a {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FB667A;
+  text-decoration: none;
+}
+
+
+
+.container1 th h1, .container2 th h1 {
+	 font-weight: bold;
+	 font-size: 18px;
+   text-align: centre;
+   color: #185875;
+}
+
+.container1 td, .container2 td  {
+	  font-family: 'Open Sans', sans-serif;
+	  font-variant-numeric: slashed-zero;
+	  font-weight: bold;
+	  font-size: 20px;
+	  color: #f2f2f2;
+    -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+	  -moz-box-shadow: 0 2px 2px -2px #0E1119;
+	  box-shadow: 0 2px 2px -2px #0E1119;
+}
+
+.container1, .container2  {
+	  text-align: left;
+	  overflow: hidden;
+	  width: 80%;
+	  margin: 0 auto;
+    display: table;
+    padding: 0 0 1% 0;
+}
+
+.container1 td, .container1 th, .container2 td, .container2 th {
+	  text-align: center;
+	  padding-bottom: 5px;
+	  padding-top: 5px;
+	  padding-left:5px;
+	  padding-right:5px;
+	  background-color: #323C50;
+}
+.container1 th,.container2 th {
+	  background-color: #ffffaa;
+}
+
+.container1 td:first-child { color: #d9e521; }
+.container2 td:first-child { color: #d9e521; }
+@media (max-width: 800px) {
+.container td:nth-child(4),
+.container th:nth-child(4) { display: none; }
+}
