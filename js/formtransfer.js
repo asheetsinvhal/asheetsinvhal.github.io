@@ -1,6 +1,7 @@
 var apiCall_List = [];
 var sheetName = "";
 var members;
+var groceries_data;
 
 // Initialising Google Sheets API with verification of the user.//
 function initClient() {
@@ -67,7 +68,7 @@ function readSheets() {
 			if (response.status == 200) {
 				// Sheet data retrieved
 				var all_data = response.result; 
-				members = all_data.valueRanges[0].values; 
+				groceries_data = all_data.valueRanges[0].values; 
 			}
 			resolve();
 		}, function(reason) {
@@ -76,6 +77,49 @@ function readSheets() {
 		});
 	});
 }
+
+function updateMarketPrice() {
+    //Google sheets api 
+  shares = [];
+    var params = {
+        //The ID of the spreadsheet to retrieve data from.
+      spreadsheetId: '11hJrOFXSRW0a7Nmfbi9yfQUfl6-kmTscyYOc-29w8gQ',
+        //The A1 notation of the values to retrieve.
+      ranges: ['Stock_Prices'],
+        //TODO: Update placeholder value.How values should be represented in the output.The
+        //default render option is ValueRenderOption.FORMATTED_VALUE.
+      valueRenderOption: 'UNFORMATTED_VALUE',
+        //TODO: Update placeholder value.How dates,
+        //times,
+        //and durations should be represented in the output.This is ignored
+        //if value_render_option is FORMATTED_VALUE.The
+        //default dateTime render option is[DateTimeRenderOption.SERIAL_NUMBER].
+      dateTimeRenderOption: 'FORMATTED_STRING',
+        //TODO: Update placeholder value.
+    };
+    var request = gapi.client.sheets.spreadsheets.values.batchGet(params);
+    //to read data 
+    request.then(function(response) {
+        var stockId = document.getElementById('main').value;
+        if (response.status == 200 && response.result.valueRanges[0] != null) {
+            shares = response.result.valueRanges[0].values;
+            //refreshed values of stocks
+            for (var k = 1; k < shares.length; k += 1) {
+                if (shares[k][0] == stockId) {
+                    max_stk_qty = shares[k][5];
+                    stk_price = shares[k][6];
+                    break;
+                }
+            }
+            upper_ckt = Math.round(parseFloat(1.20 * stk_price) * 100) / 100;
+            lower_ckt = Math.round(parseFloat(0.80 * stk_price) * 100) / 100;
+            document.getElementById('price').value = stk_price ? Math.round(parseFloat(stk_price) * 100) / 100 : 0;
+            document.getElementById('quantity').setAttribute('placeholder', 'MAX BUY ' + max_stk_qty ? max_stk_qty : 0);
+        }
+    }, function(reason) {
+        console.error('error: ' + reason.result.error.message);
+    });
+} 
 
 // Function to retrieve data from webpage and to send it to the sheet
 order_action = async function(buttonId) {
@@ -114,7 +158,7 @@ order_action = async function(buttonId) {
             if (response.status == 200) {
                 showNotif('ORDER SUCCESFUL');
                 await readSheets();
-                await putOrderData();
+                await loadOrderData();
             } else {
                 showNotif('! TRY AGAIN !');
             }
@@ -140,3 +184,21 @@ function clearInputs(){
     document.getElementById('price').value = '';
 	document.getElementById('order-popup').style.display = 'none';
 }
+
+function loadOrderData() {
+    order_book = document.getElementById('order_book');
+    order_book.innerHTML = '';
+    order_book.innerHTML += '<div style="display: table">';
+    order_book.innerHTML += '<div style="display: table-row"><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;">ITEM</div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> QTY </div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> VALUE </div></div>';
+    var row_count = 0;
+    for (var k = 1; k < groceries_data.length; k += 1) {
+        if (groceries_data[k][0] == parseInt(team_id)) {
+            var current_value = Math.round(parseFloat(groceries_data[k][4]) * 100) / 100;
+            order_book.innerHTML += '<div style="display: table-row">' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + groceries_data[k][1] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + groceries_data[k][2] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_value + '</div>' + '</div>';
+            row_count += 1;
+        }
+        if (row_count == 5) break;
+    }
+    order_book.innerHTML += '</div>';
+    showPort();
+};
