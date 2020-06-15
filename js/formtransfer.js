@@ -1,6 +1,7 @@
 var apiRead_Sheet = [];
 var apiWrite_Sheet = "";
 var groceries_data;
+var user_data;
 var item_price = 0;
 var unit_qty = 0;
 
@@ -41,7 +42,7 @@ function handleSignOutClick(event) {
 }
 function setSheets() { 
 	//Specify read and write sheets respectively//
-    apiRead_Sheet = ['Grocery Names']; 
+    apiRead_Sheet = ['Grocery Names','Orders']; 
 	// Write sheet along with the start cell must be mentioned//
     apiWrite_Sheet = 'Orders!A2';  
     readSheets();
@@ -70,6 +71,7 @@ function readSheets() {
 				// Sheet data retrieved
 				var all_data = response.result; 
 				groceries_data = all_data.valueRanges[0].values; //Data on 1st sheet--0,2nd sheet--1
+				user_data = all_data.valueRanges[1].values; 
 				loadGroceryData();
 			}
 			resolve();
@@ -92,8 +94,8 @@ function updateGroceryPrice() {
     var item_name = document.getElementById('grocery').value;
 	for(var i = 1; i <= groceries_data.length; i++) {
 		if(groceries_data[i][0] == item_name) {
-			unit_qty = groceries_data[i][1];
-			item_price = groceries_data[i][2];
+			unit_qty = groceries_data[i][2];
+			item_price = groceries_data[i][1];
 			break;
 		}
 	}
@@ -139,7 +141,7 @@ order_action = async function(buttonId) {
             if (response.status == 200) {
                 showNotif('ORDER SUCCESFUL');
                 await readSheets();
-                await loadOrderData();
+                await loadOrderData(user_name,bill_value);
             } else {
                 showNotif('! TRY AGAIN !');
             }
@@ -165,6 +167,7 @@ function showNotif(text, background = "black", color = "red") {
         }, 2000);
     }
 }
+
 function showPort() {
     document.getElementById('order-popup').style.display = 'block';
 }
@@ -173,24 +176,26 @@ function hidePort() {
     document.getElementById('order-popup').style.display = 'none';
 }	
 function clearInputs(){
-    document.getElementById('user_name').value = '';
-    document.getElementById('cno').value = '';
+	document.getElementById('user_name').value = '';
+	document.getElementById('cno').value = '';
     document.getElementById('grocery').value = -1;
     document.getElementById('quantity').value = '';
     document.getElementById('price').value = '';
-    document.getElementById('order-popup').style.display = 'none';
+	document.getElementById('order-popup').style.display = 'none';
 }
 
-function loadOrderData() {
+function loadOrderData(user_name,bill_value) {
+	document.getElementById('pop_name').innerHTML = user_name;
+    document.getElementById('pop_bill').innerHTML = parseFloat(bill_value);
     order_book = document.getElementById('order_book');
     order_book.innerHTML = '';
     order_book.innerHTML += '<div style="display: table">';
     order_book.innerHTML += '<div style="display: table-row"><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;">ITEM</div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> QTY </div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> VALUE </div></div>';
     var row_count = 0;
-    for (var k = 1; k < groceries_data.length; k += 1) {
-        if (groceries_data[k][0] == parseInt(team_id)) {
-            var current_value = Math.round(parseFloat(groceries_data[k][4]) * 100) / 100;
-            order_book.innerHTML += '<div style="display: table-row">' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + groceries_data[k][1] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + groceries_data[k][2] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_value + '</div>' + '</div>';
+    for (var k = 1; k < user_data.length; k += 1) {
+        if (user_data[k][0] == user_name) {
+            var current_value = parseFloat(user_data[k][4]);
+            order_book.innerHTML += '<div style="display: table-row">' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][1] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_value + '</div>' + '</div>';
             row_count += 1;
         }
         if (row_count == 5) break;
