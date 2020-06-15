@@ -150,6 +150,21 @@ order_action = async function(buttonId) {
         });
 	
 }
+function showNotif(text, background = "black", color = "red") {
+    if (document.getElementById('notif').style.display == 'block') {
+        setTimeout(function() {
+            showNotif(text, background)
+        }, 2000);
+    } else {
+        document.getElementById('notif').innerHTML = text;
+        document.getElementById('notif').style.background = background;
+        document.getElementById('notif').style.display = 'block';
+        document.getElementById('notif').style.color = color;
+        setTimeout(function() {
+            document.getElementById('notif').style.display = 'none'
+        }, 2000);
+    }
+}
 function showPort() {
     document.getElementById('order-popup').style.display = 'block';
 }
