@@ -113,7 +113,7 @@ order_action = async function(buttonId) {
 
     var params = {
         //The ID of the spreadsheet to write data into.
-		spreadsheetId: '11hJrOFXSRW0a7Nmfbi9yfQUfl6-kmTscyYOc-29w8gQ',
+		spreadsheetId: '1hjev7D-SCDPjukXNyclKtJX8tfBxI7m2mzpbZlUM1Jk',
         //The A1 notation of the cell address.Even if the cell is filled, next entry will go to next row/column
 		range: apiWrite_Sheet,
         //Specify how the input data should be interpreted. RAW or USER_ENTERED.
@@ -158,12 +158,12 @@ function hidePort() {
     document.getElementById('order-popup').style.display = 'none';
 }	
 function clearInputs(){
-	document.getElementById('user_name').value = '';
-	document.getElementById('cno').value = '';
+    document.getElementById('user_name').value = '';
+    document.getElementById('cno').value = '';
     document.getElementById('grocery').value = -1;
     document.getElementById('quantity').value = '';
     document.getElementById('price').value = '';
-	document.getElementById('order-popup').style.display = 'none';
+    document.getElementById('order-popup').style.display = 'none';
 }
 
 function loadOrderData() {
