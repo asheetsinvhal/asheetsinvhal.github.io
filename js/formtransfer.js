@@ -1,7 +1,8 @@
-var apiCall_List = [];
-var sheetName = "";
-var members;
+var apiRead_Sheet = [];
+var apiWrite_Sheet = "";
 var groceries_data;
+var item_price = 0;
+var unit_qty = 0;
 
 // Initialising Google Sheets API with verification of the user.//
 function initClient() {
@@ -68,7 +69,8 @@ function readSheets() {
 			if (response.status == 200) {
 				// Sheet data retrieved
 				var all_data = response.result; 
-				groceries_data = all_data.valueRanges[0].values; 
+				groceries_data = all_data.valueRanges[0].values; //Data on 1st sheet--0,2nd sheet--1
+				loadGroceryData();
 			}
 			resolve();
 		}, function(reason) {
@@ -78,47 +80,26 @@ function readSheets() {
 	});
 }
 
-function updateMarketPrice() {
-    //Google sheets api 
-  shares = [];
-    var params = {
-        //The ID of the spreadsheet to retrieve data from.
-      spreadsheetId: '11hJrOFXSRW0a7Nmfbi9yfQUfl6-kmTscyYOc-29w8gQ',
-        //The A1 notation of the values to retrieve.
-      ranges: ['Stock_Prices'],
-        //TODO: Update placeholder value.How values should be represented in the output.The
-        //default render option is ValueRenderOption.FORMATTED_VALUE.
-      valueRenderOption: 'UNFORMATTED_VALUE',
-        //TODO: Update placeholder value.How dates,
-        //times,
-        //and durations should be represented in the output.This is ignored
-        //if value_render_option is FORMATTED_VALUE.The
-        //default dateTime render option is[DateTimeRenderOption.SERIAL_NUMBER].
-      dateTimeRenderOption: 'FORMATTED_STRING',
-        //TODO: Update placeholder value.
-    };
-    var request = gapi.client.sheets.spreadsheets.values.batchGet(params);
-    //to read data 
-    request.then(function(response) {
-        var stockId = document.getElementById('main').value;
-        if (response.status == 200 && response.result.valueRanges[0] != null) {
-            shares = response.result.valueRanges[0].values;
-            //refreshed values of stocks
-            for (var k = 1; k < shares.length; k += 1) {
-                if (shares[k][0] == stockId) {
-                    max_stk_qty = shares[k][5];
-                    stk_price = shares[k][6];
-                    break;
-                }
-            }
-            upper_ckt = Math.round(parseFloat(1.20 * stk_price) * 100) / 100;
-            lower_ckt = Math.round(parseFloat(0.80 * stk_price) * 100) / 100;
-            document.getElementById('price').value = stk_price ? Math.round(parseFloat(stk_price) * 100) / 100 : 0;
-            document.getElementById('quantity').setAttribute('placeholder', 'MAX BUY ' + max_stk_qty ? max_stk_qty : 0);
-        }
-    }, function(reason) {
-        console.error('error: ' + reason.result.error.message);
-    });
+function loadGroceryData(){
+    item_content = document.getElementById('grocery');
+    item_content.innerHTML = '<option>-</option>';
+    for (var i in groceries_data) {
+        item_content.innerHTML += '<option>' + groceries_data[i][0] + '</option>';
+    }
+}
+
+function updateGroceryPrice() {
+    var item_name = document.getElementById('grocery').value;
+	for(var i = 1; i <= groceries_data.length; i++) {
+		if(groceries_data[i][0] == item_name) {
+			unit_qty = groceries_data[i][2];
+			item_price = groceries_data[i][1];
+			break;
+		}
+	}
+	document.getElementById('quantity').setAttribute('placeholder', 'UNIT SIZE ' + unit_qty ? unit_qty : 0);
+	document.getElementById('price').value = item_price ? Math.round(parseFloat(item_price) * 100) / 100 : 0;
+        
 } 
 
 // Function to retrieve data from webpage and to send it to the sheet
