@@ -92,8 +92,8 @@ function updateGroceryPrice() {
     var item_name = document.getElementById('grocery').value;
 	for(var i = 1; i <= groceries_data.length; i++) {
 		if(groceries_data[i][0] == item_name) {
-			unit_qty = groceries_data[i][2];
-			item_price = groceries_data[i][1];
+			unit_qty = groceries_data[i][1];
+			item_price = groceries_data[i][2];
 			break;
 		}
 	}
