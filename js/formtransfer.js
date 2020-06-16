@@ -182,15 +182,20 @@ function loadOrderData(user_name,bill_value) {
     order_book = document.getElementById('order_book');
     order_book.innerHTML = '';
     order_book.innerHTML += '<div style="display: table">';
-    order_book.innerHTML += '<div style="display: table-row"><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;">ITEM</div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> QTY </div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> VALUE </div></div>';
+    order_book.innerHTML += '<div style="display: table-row"><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;">ITEM</div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> QTY </div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> PRICE</div><div style="display: table-cell;padding: 4px;border: 1px solid black;color: #0ba216;"> VALUE </div></div>';
     var row_count = 0;
     for (var k = 1; k < user_data.length; k += 1) {
         if (user_data[k][0] == user_name) {
-            var current_value = parseFloat(user_data[k][6]);
-            order_book.innerHTML += '<div style="display: table-row">' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][3] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_value + '</div>' + '</div>';
+            var bill_value = parseFloat(user_data[k][5]);
+            order_book.innerHTML += '<div style="display: table-row">' + 
+					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' +
+					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][3] + '</div>' +
+					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][4] + '</div>'+
+					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + bill_value + '</div>' +
+					'</div>';
             row_count += 1;
         }
-        if (row_count == 5) 
+        if (row_count <= 5) 
 			break;
     }
     order_book.innerHTML += '</div>';
