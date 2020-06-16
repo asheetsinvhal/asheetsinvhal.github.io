@@ -1,9 +1,10 @@
 var apiRead_Sheet = [];
 var apiWrite_Sheet = "";
-var groceries_data;
-var user_data;
+var groceries_data = [];
+var user_data = [];
 var item_price = 0;
 var unit_qty = 0;
+var total_bill=0;
 
 // Initialising Google Sheets API with verification of the user.//
 function initClient() {
@@ -185,7 +186,7 @@ function loadOrderData(user_name,current_bill) {
     var row_count = 0;
     for (var k = 1; k < user_data.length; k += 1) {
         if (user_data[k][0] == user_name) {
-            var total_bill+ = parseFloat(user_data[k][5]);
+            total_bill+ = parseFloat(user_data[k][5]);
 			document.getElementById('pop_bill').innerHTML = parseFloat(total_bill);
             order_book.innerHTML += '<div style="display: table-row">' + 
 					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' +
