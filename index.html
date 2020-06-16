@@ -137,13 +137,13 @@
     <p class="big-title">Grocery Ordering Form</p>
 	<div id="container">
 		<p class="less-margin">NAME</p>
-		<div><input type="text" id="user_name"></div>
+		<div><input type="text" id="user_name" onClick="hidePort()"></div>
 		<p class="less-margin">CONTACT NUMBER</p>
 		<div><input type="number" pattern='[0-9]{10}' id="cno"></div>
 		<p class="less-margin">ITEM</p>
 		
 		<div>
-			<select id="grocery" onclick="updateGroceryPrice();">
+			<select id="grocery" onClick="updateGroceryPrice()">
 			</select>
 		</div>
 		
