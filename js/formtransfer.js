@@ -179,6 +179,7 @@ function clearInputs(){
 
 function loadOrderData(user_name,current_bill) {
 	document.getElementById('pop_name').innerHTML = user_name;
+	user_total = document.getElementById('pop_bill');
     order_book = document.getElementById('order_book');
     order_book.innerHTML = '';
     order_book.innerHTML += '<div style="display: table">';
@@ -186,8 +187,8 @@ function loadOrderData(user_name,current_bill) {
     var row_count = 0;
     for (var k = 1; k < user_data.length; k += 1) {
         if (user_data[k][0] == user_name) {
-            total_bill+ = parseFloat(user_data[k][5]);
-			document.getElementById('pop_bill').innerHTML = parseFloat(total_bill);
+            total_bill+= parseFloat(user_data[k][5]);
+			user_total.innerHTML = total_bill;
             order_book.innerHTML += '<div style="display: table-row">' + 
 					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' +
 					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][3] + '</div>' +
