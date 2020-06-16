@@ -112,11 +112,11 @@ order_action = async function(buttonId) {
 		var grocery = document.getElementById('grocery').value;
 		var qty = parseInt(document.getElementById('quantity').value);
 		var price = Math.round(parseFloat(document.getElementById('price').value) * 100) / 100;
-		var bill_value = qty * price;
+		var current_bill = qty * price;
         var valueRangeBody = {
             "values": [
 			    // Sequence in which the values are to be written in the sheet
-                [user_name,cno,grocery,price,qty,bill_value] 
+                [user_name,cno,grocery,price,qty,current_bill] 
             ]
         };
     } else {
@@ -176,9 +176,8 @@ function clearInputs(){
 	document.getElementById('order-popup').style.display = 'none';
 }
 
-function loadOrderData(user_name,bill_value) {
+function loadOrderData(user_name,current_bill) {
 	document.getElementById('pop_name').innerHTML = user_name;
-    document.getElementById('pop_bill').innerHTML = parseFloat(bill_value);
     order_book = document.getElementById('order_book');
     order_book.innerHTML = '';
     order_book.innerHTML += '<div style="display: table">';
@@ -186,12 +185,13 @@ function loadOrderData(user_name,bill_value) {
     var row_count = 0;
     for (var k = 1; k < user_data.length; k += 1) {
         if (user_data[k][0] == user_name) {
-            var bill_value = parseFloat(user_data[k][5]);
+            var total_bill+ = parseFloat(user_data[k][5]);
+			document.getElementById('pop_bill').innerHTML = parseFloat(total_bill);
             order_book.innerHTML += '<div style="display: table-row">' + 
 					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' +
 					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][3] + '</div>' +
 					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][4] + '</div>'+
-					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + bill_value + '</div>' +
+					'<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_bill + '</div>' +
 					'</div>';
             row_count += 1;
         }
