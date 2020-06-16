@@ -195,8 +195,6 @@ function loadOrderData(user_name,bill_value) {
 					'</div>';
             row_count += 1;
         }
-        if (row_count <= 5) 
-			break;
     }
     order_book.innerHTML += '</div>';
     showPort();
