@@ -106,24 +106,13 @@ function updateGroceryPrice() {
 
 // Function to retrieve data from webpage and to send it to the sheet
 order_action = async function(buttonId) {
-	var user_name = document.getElementById('user_name').value;
-    var cno = document.getElementById('cno').value;
-	var grocery = document.getElementById('grocery').value;
-    var qty = parseInt(document.getElementById('quantity').value);
-    var price = Math.round(parseFloat(document.getElementById('price').value) * 100) / 100;
-    var bill_value = qty * price;
-
-    var params = {
-        //The ID of the spreadsheet to write data into.
-		spreadsheetId: '1hjev7D-SCDPjukXNyclKtJX8tfBxI7m2mzpbZlUM1Jk',
-        //The A1 notation of the cell address.Even if the cell is filled, next entry will go to next row/column
-		range: apiWrite_Sheet,
-        //Specify how the input data should be interpreted. RAW or USER_ENTERED.
-		valueInputOption: 'USER_ENTERED',
-        //TODO: Update placeholder value.
-		insertDataOption: 'OVERWRITE'
-    };
-    if (buttonId == "buy") {
+	if (buttonId == "buy") {
+		var user_name = document.getElementById('user_name').value;
+		var cno = document.getElementById('cno').value;
+		var grocery = document.getElementById('grocery').value;
+		var qty = parseInt(document.getElementById('quantity').value);
+		var price = Math.round(parseFloat(document.getElementById('price').value) * 100) / 100;
+		var bill_value = qty * price;
         var valueRangeBody = {
             "values": [
 			    // Sequence in which the values are to be written in the sheet
@@ -134,6 +123,16 @@ order_action = async function(buttonId) {
         clearInputs();
 		return;
     }
+	var params = {
+        //The ID of the spreadsheet to write data into.
+		spreadsheetId: '1hjev7D-SCDPjukXNyclKtJX8tfBxI7m2mzpbZlUM1Jk',
+        //The A1 notation of the cell address.Even if the cell is filled, next entry will go to next row/column
+		range: apiWrite_Sheet,
+        //Specify how the input data should be interpreted. RAW or USER_ENTERED.
+		valueInputOption: 'USER_ENTERED',
+        //TODO: Update placeholder value.
+		insertDataOption: 'OVERWRITE'
+    };
 	//Using the append method of Sheets API
     var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
 	//Calling the API again to read the data from spreadsheet
@@ -156,7 +155,7 @@ function showNotif(text, background = "black", color = "red") {
     if (document.getElementById('notif').style.display == 'block') {
         setTimeout(function() {
             showNotif(text, background)
-        }, 2000);
+        }, 3000);
     } else {
         document.getElementById('notif').innerHTML = text;
         document.getElementById('notif').style.background = background;
@@ -164,17 +163,10 @@ function showNotif(text, background = "black", color = "red") {
         document.getElementById('notif').style.color = color;
         setTimeout(function() {
             document.getElementById('notif').style.display = 'none'
-        }, 2000);
+        }, 3000);
     }
 }
-
-function showPort() {
-    document.getElementById('order-popup').style.display = 'block';
-}
-
-function hidePort() {
-    document.getElementById('order-popup').style.display = 'none';
-}	
+	
 function clearInputs(){
 	document.getElementById('user_name').value = '';
 	document.getElementById('cno').value = '';
@@ -194,12 +186,20 @@ function loadOrderData(user_name,bill_value) {
     var row_count = 0;
     for (var k = 1; k < user_data.length; k += 1) {
         if (user_data[k][0] == user_name) {
-            var current_value = parseFloat(user_data[k][4]);
-            order_book.innerHTML += '<div style="display: table-row">' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][1] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_value + '</div>' + '</div>';
+            var current_value = parseFloat(user_data[k][6]);
+            order_book.innerHTML += '<div style="display: table-row">' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][2] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + user_data[k][3] + '</div>' + '<div style="display: table-cell;padding: 4px;border: 1px solid black;">' + current_value + '</div>' + '</div>';
             row_count += 1;
         }
-        if (row_count == 5) break;
+        if (row_count == 5) 
+			break;
     }
     order_book.innerHTML += '</div>';
     showPort();
-};
+}
+function showPort() {
+    document.getElementById('order-popup').style.display = 'block';
+}
+
+function hidePort() {
+    document.getElementById('order-popup').style.display = 'none';
+}
