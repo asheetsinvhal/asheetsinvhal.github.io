@@ -141,7 +141,7 @@ order_action = async function(buttonId) {
             if (response.status == 200) {
                 showNotif('ORDER SUCCESFUL');
                 await readSheets();
-                await loadOrderData(user_name,bill_value);
+                await loadOrderData(user_name,current_bill);
             } else {
                 showNotif('! TRY AGAIN !');
             }
